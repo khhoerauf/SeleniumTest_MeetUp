@@ -22,7 +22,7 @@ namespace SeleniumTest_MeetUp.PageObjectModel
 
         protected string nameError => Driver.FindElement(By.Id("register-error--name")).Text;
         protected string emailError => Driver.FindElement(By.Id("register-error--email")).Text;
-        protected string passwordError => Driver.FindElement(By.Id("Please enter a password.")).Text;
+        protected string passwordError => Driver.FindElement(By.Id("register-error--password")).Text;
         protected bool RobotCheckbox => Driver.FindElements(By.XPath("//div[@id='rc-anchor-container']")).Any();
 
         public void RegisterWithInvalidEmail()
@@ -33,6 +33,22 @@ namespace SeleniumTest_MeetUp.PageObjectModel
             Assert.Equal("Doesn't look like an email address", emailError);
         }
 
+        public void RegisterWithEmptyName()
+        {
+            AccountParametersToRegisterWithEmail("", "test", "test123");
+            Assert.Equal("Can't be empty", nameError);
+            ClickOnContinue();
+            Assert.Equal("Can't be empty", nameError);
+        }
+        
+        public void RegisterWithInvalidPassword()
+        {
+            AccountParametersToRegisterWithEmail("test", "test", "test");
+            Assert.Equal("Should be at least 6 characters", passwordError);
+            ClickOnContinue();
+            Assert.Equal("Should be at least 6 characters", passwordError);
+        }
+        
         protected void AccountParametersToRegisterWithEmail(string name, string email, string password)
         {
             Driver.FindElement(registerWithEmail).Click();

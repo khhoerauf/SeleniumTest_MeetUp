@@ -1,6 +1,5 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using SeleniumTest_MeetUp.PageObjectModel;
 using Xunit;
 
 namespace SeleniumTest_MeetUp
@@ -20,7 +19,7 @@ namespace SeleniumTest_MeetUp
 
         [Fact]
         [Trait("Category", "Regression")]
-        public void VerifyRegisterValidation()
+        public void VerifyRegisterWithInvalidEmial()
         {
             using (IWebDriver driver = new ChromeDriver())
             {
@@ -28,6 +27,32 @@ namespace SeleniumTest_MeetUp
                 home.GoToHomePage();
                 var register = home.ClickOnJoinMeetUpButton();
                 register.RegisterWithInvalidEmail();
+            }
+        }
+
+        [Fact]
+        [Trait("Category", "Regression")]
+        public void VerifyRegisterWithEmptyName()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var home = new HomePage(driver);
+                home.GoToHomePage();
+                var register = home.ClickOnJoinMeetUpButton();
+                register.RegisterWithEmptyName();
+            }
+        }
+
+        [Fact]
+        [Trait("Category", "Regression")]
+        public void VerifyRegisterWithInvalidPassword()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                var home = new HomePage(driver);
+                home.GoToHomePage();
+                var register = home.ClickOnJoinMeetUpButton();
+                register.RegisterWithInvalidPassword();
             }
         }
     }
